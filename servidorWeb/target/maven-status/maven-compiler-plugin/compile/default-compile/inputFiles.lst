@@ -1,0 +1,10 @@
+/Users/nelsonrivas/NetBeansProjects/servidorWeb/src/main/java/com/mycompany/servidorweb/seguridad/JwUtil.java
+/Users/nelsonrivas/NetBeansProjects/servidorWeb/src/main/java/com/mycompany/servidorweb/models/persona.java
+/Users/nelsonrivas/NetBeansProjects/servidorWeb/src/main/java/com/mycompany/servidorweb/models/Inventario.java
+/Users/nelsonrivas/NetBeansProjects/servidorWeb/src/main/java/com/mycompany/servidorweb/ServidorWeb.java
+/Users/nelsonrivas/NetBeansProjects/servidorWeb/src/main/java/com/mycompany/servidorweb/models/Usuario.java
+/Users/nelsonrivas/NetBeansProjects/servidorWeb/src/main/java/com/mycompany/servidorweb/bd/UsuarioCRUD.java
+/Users/nelsonrivas/NetBeansProjects/servidorWeb/src/main/java/com/mycompany/servidorweb/controller/UsuarioController.java
+/Users/nelsonrivas/NetBeansProjects/servidorWeb/src/main/java/com/mycompany/servidorweb/bd/ConexionMySQL.java
+/Users/nelsonrivas/NetBeansProjects/servidorWeb/src/main/java/com/mycompany/servidorweb/controller/InventarioController.java
+/Users/nelsonrivas/NetBeansProjects/servidorWeb/src/main/java/com/mycompany/servidorweb/bd/InventarioCRUD.java
