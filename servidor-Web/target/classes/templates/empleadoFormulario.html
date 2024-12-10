@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Definición del conjunto de caracteres y la configuración de la vista para dispositivos móviles -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Título de la página que aparecerá en la pestaña del navegador -->
+    <title>Agregar Empleado</title>
+
+    <!-- Enlace a la hoja de estilos de Bootstrap desde un CDN para un diseño atractivo y responsivo -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Estilos personalizados para la página -->
+    <style>
+        /* Fondo y márgenes personalizados para el cuerpo de la página */
+        body {
+            background-color: #f8f9fa;
+            padding-top: 50px;
+        }
+
+        /* Estilo para el contenedor del formulario: fondo blanco, bordes redondeados y sombra */
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        /* Estilo para el título del formulario, centrado y con mayor tamaño de fuente */
+        .form-title {
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Estilo para las alertas, centradas en la página */
+        .alert {
+            text-align: center;
+        }
+    </style>
+
+    <!-- Script para obtener el token JWT almacenado en las cookies y asignarlo a un campo oculto -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Obtener el token JWT de las cookies
+            const token = document.cookie.split('; ').find(row => row.startsWith('jwt=')).split('=')[1];
+            // Asignar el token al campo oculto con id "jwt"
+            document.getElementById("jwt").value = token;
+        });
+    </script>
+</head>
+
+<body>
+
+    <!-- Contenedor principal para el formulario de agregar empleado -->
+    <div class="container">
+        <!-- Título de la página o formulario -->
+        <div class="form-title">Agregar Nuevo Empleado</div>
+        
+        <!-- Mensaje de confirmación que se mostrará si la variable "mensaje" está disponible -->
+        <div th:if="${mensaje}" class="alert alert-success">
+            <!-- El mensaje es mostrado aquí -->
+            <p th:text="${mensaje}"></p>
+        </div>
+
+        <!-- Formulario para agregar un empleado -->
+        <form action="#" th:action="@{/empleados/agregar}" th:object="${empleado}" method="post">
+            <!-- Campo para la cédula del empleado -->
+            <div class="form-group">
+                <label for="cedula">Cédula:</label>
+                <input type="text" id="cedula" th:field="*{cedula}" class="form-control" placeholder="Ingrese la cédula" required>
+            </div>
+
+            <!-- Campo para el nombre del empleado -->
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" th:field="*{nombre}" class="form-control" placeholder="Ingrese el nombre" required>
+            </div>
+
+            <!-- Campo para los apellidos del empleado -->
+            <div class="form-group">
+                <label for="apellidos">Apellidos:</label>
+                <input type="text" id="apellidos" th:field="*{apellidos}" class="form-control" placeholder="Ingrese los apellidos" required>
+            </div>
+
+            <!-- Campo para el salario del empleado -->
+            <div class="form-group">
+                <label for="salario">Salario:</label>
+                <input type="number" id="salario" th:field="*{salario}" class="form-control" placeholder="Ingrese el salario" required>
+            </div>
+
+            <!-- Botón para enviar el formulario -->
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary btn-lg">Agregar Empleado</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Enlace para volver al listado de empleados -->
+    <a href="/empleados/listar" class="volver-btn">Ir al listado</a>
+
+    <!-- Enlaces a los scripts de Bootstrap para funcionalidades interactivas como menús desplegables -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+

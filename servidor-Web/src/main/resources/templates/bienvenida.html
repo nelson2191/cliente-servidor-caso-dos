@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Título de la página -->
+    <title>Bienvenido</title>
+
+    <!-- Inclusión del archivo de estilo Bootstrap desde un CDN para diseño responsivo y atractivo -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <!-- Script para obtener el token JWT almacenado en las cookies y asignarlo a un campo oculto -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Obtiene el valor del token JWT de las cookies
+            const token = document.cookie.split('; ').find(row => row.startsWith('jwt=')).split('=')[1];
+            // Asigna el token al campo con id "jwt" en el formulario (esto es útil para enviar el token en peticiones posteriores)
+            document.getElementById("jwt").value = token;
+        });
+    </script>
+</head>
+<body class="bg-light">
+<!-- Barra de navegación utilizando Bootstrap para navegación responsiva -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <!-- Título de la aplicación con enlace -->
+        <a class="navbar-brand" href="#">Mi Aplicación</a>
+        <!-- Botón para activar el menú de navegación en pantallas pequeñas -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Menú de navegación -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <!-- Enlace para ingresar nuevos empleados, utilizando Thymeleaf para la URL -->
+                <li class="nav-item">
+                    <a class="nav-link active" th:href="@{/empleados/formulario-empleado}">Ingresar empleados</a>
+                </li>
+                <!-- Enlace para listar empleados -->
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/empleados/listar}">Listar empleados</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Contenedor principal para el contenido de la página -->
+<div class="container mt-5">
+    <!-- Fila para centrar el contenido -->
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Sección de bienvenida al usuario con un título y una breve descripción -->
+            <div class="text-center">
+                <h1 class="display-4 text-primary">¡Bienvenido a Mi Aplicación!</h1>
+                <p class="lead mt-3">
+                    Una plataforma donde puedes gestionar tus empleados de manera eficiente y segura.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pie de página con estilo Bootstrap -->
+<footer class="bg-primary text-white text-center py-3 mt-5">
+    <p class="mb-0">© 2024 Mi Aplicación. Todos los derechos reservados.</p>
+</footer>
+
+<!-- Inclusión de los scripts de Bootstrap para funcionalidad interactiva (por ejemplo, menú desplegable) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Gestión de Usuarios</title>
+    <style>
+        /* Estilos generales de la página */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Estilo para el encabezado */
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Contenedor que alberga tanto la tabla como el formulario */
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+        }
+
+        /* Estilo para la tabla de empleados */
+        .table-container {
+            width: 55%;
+        }
+
+        /* Estilos de la tabla */
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        /* Estilo para los encabezados de la tabla */
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Estilo para las filas alternas de la tabla */
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Estilo para las filas al pasar el mouse por encima */
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        /* Estilos para el formulario de modificación de empleado */
+        .form-container {
+            width: 40%;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* Título dentro del formulario */
+        .form-container h2 {
+            color: #333;
+        }
+
+        /* Estilos del formulario: disposición de los campos */
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Estilos para las etiquetas del formulario */
+        .form-container label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        /* Estilos para los campos de entrada del formulario */
+        .form-container input {
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        /* Estilo para el botón de envío */
+        .form-container button {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Estilo al pasar el mouse por encima del botón */
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+
+        /* Estilo para los mensajes de éxito o error */
+        .mensaje {
+            text-align: center;
+            color: green;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        /* Script que maneja la carga de los datos en el formulario de modificación */
+        document.addEventListener("DOMContentLoaded", function () {
+            // Selección de todas las filas de la tabla
+            const rows = document.querySelectorAll("table tbody tr");
+            // Selección de los campos del formulario
+            const cedulaInput = document.getElementById("cedula");
+            const nombreInput = document.getElementById("nombre");
+            const apellidosInput = document.getElementById("apellidos");
+            const correoInput = document.getElementById("correo");
+            
+            // Iteración sobre cada fila de la tabla
+            rows.forEach(row => {
+                // Agregar un event listener a cada enlace de "Modificar"
+                row.querySelector("#enlacemodificar").addEventListener("click", function (event) {
+                    event.preventDefault();  // Prevenir el comportamiento por defecto del enlace
+                    
+                    // Llenar los campos del formulario con los datos de la fila seleccionada
+                    cedulaInput.value = row.querySelector("td:nth-child(1)").textContent;  // Cédula
+                    nombreInput.value = row.querySelector("td:nth-child(2)").textContent;   // Nombre
+                    apellidosInput.value = row.querySelector("td:nth-child(3)").textContent; // Apellidos
+                    correoInput.value = row.querySelector("td:nth-child(4)").textContent;   // Salario
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <!-- Título principal de la página -->
+    <h1>Gestión de Usuarios</h1>
+    
+    <!-- Contenedor principal que organiza la tabla y el formulario -->
+    <div class="container">
+        <!-- Contenedor para la tabla de empleados -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cédula</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Correo</th>
+                        <th>Modificar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Iteración sobre los empleados para mostrar sus datos -->
+                    <tr th:each="usuario : ${usuarios}">
+                        <td th:text="${usuario.cedula}"></td>  <!-- Mostrar la cédula -->
+                        <td th:text="${usuario.nombre}"></td>  <!-- Mostrar el nombre -->
+                        <td th:text="${usuario.apellidos}"></td> <!-- Mostrar los apellidos -->
+                        <td th:text="${usuario.correo}"></td>  <!-- Mostrar el salario -->
+                        <td><a href="#" id="enlacemodificar">Modificar</a></td> <!-- Enlace para modificar el empleado -->
+                        <td><a th:href="@{/usuarios/eliminar/{correo}(correo=${usuario.correo})}">Eliminar</a></td> <!-- Enlace para eliminar el empleado -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Formulario para modificar los datos de un empleado -->
+        <div class="form-container">
+            <h2>Modificar Usuario</h2>
+            <form id="modificarForm" action="#" th:action="@{/usuarios/actualizar}" th:object="${usuario}" method="post">
+                <!-- Campo de cédula (readonly ya que no se puede modificar) -->
+                <label for="cedula">Cédula:</label>
+                <input type="text" id="cedula" name="cedula" readonly>
+
+                <!-- Campo de nombre para modificar -->
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre">
+
+                <!-- Campo de apellidos para modificar -->
+                <label for="apellidos">Apellidos:</label>
+                <input type="text" id="apellidos" name="apellidos">
+
+                <!-- Campo de salario para modificar -->
+                <label for="correo">Correo:</label>
+                <input type="text" id="correo" name="correo">
+
+                <!-- Botón para enviar el formulario y actualizar los datos -->
+                <button type="submit">Modificar</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
+
